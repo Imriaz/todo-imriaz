@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Todo } from "../Model/model";
+import { Todo } from "../../model/model";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
-import TodoList from "./TodoList";
+import TodoList from "../TodoList";
 
 type SingleTodoProps = {
   todo: Todo;
@@ -57,7 +57,7 @@ const SingleTodo: React.FC<SingleTodoProps> = ({
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-   /*
+  /*
   This is for edit the task on todo list
   */
   const handleEdit = (e: React.FormEvent, id: number) => {
@@ -82,38 +82,40 @@ const SingleTodo: React.FC<SingleTodoProps> = ({
   }, [edit]);
 
   return (
-    <form className="todos__single" onSubmit={(e) => handleEdit(e, todo.id)}>
-      {edit ? (
-        <input
-          ref={inputRef}
-          value={editTodo}
-          onChange={(e) => setEditTodo(e.target.value)}
-          className="todos__single--text"
-        />
-      ) : todo.isDone ? (
-        <s className="todos__single--text">{todo.todo}</s>
-      ) : (
-        <span className="todos__single--text">{todo.todo}</span>
-      )}
-      <div>
-        <span
-          className="icon"
-          onClick={() => {
-            if (!edit && !todo.isDone) {
-              setEdit(!edit);
-            }
-          }}
-        >
-          <AiFillEdit />
-        </span>
-        <span className="icon" onClick={() => handleDelete(todo.id)}>
-          <AiFillDelete />
-        </span>
-        <span className="icon" onClick={() => handleDone(todo.id)}>
-          <MdDone />
-        </span>
-      </div>
-    </form>
+    <React.Fragment>
+      <form className="todos__single" onSubmit={(e) => handleEdit(e, todo.id)}>
+        {edit ? (
+          <input
+            ref={inputRef}
+            value={editTodo}
+            onChange={(e) => setEditTodo(e.target.value)}
+            className="todos__single--text"
+          />
+        ) : todo.isDone ? (
+          <s className="todos__single--text">{todo.todo}</s>
+        ) : (
+          <span className="todos__single--text">{todo.todo}</span>
+        )}
+        <div>
+          <span
+            className="icon"
+            onClick={() => {
+              if (!edit && !todo.isDone) {
+                setEdit(!edit);
+              }
+            }}
+          >
+            <AiFillEdit />
+          </span>
+          <span className="icon" onClick={() => handleDelete(todo.id)}>
+            <AiFillDelete />
+          </span>
+          <span className="icon" onClick={() => handleDone(todo.id)}>
+            <MdDone />
+          </span>
+        </div>
+      </form>
+    </React.Fragment>
   );
 };
 
