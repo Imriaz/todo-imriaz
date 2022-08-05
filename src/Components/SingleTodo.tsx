@@ -4,15 +4,21 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import TodoList from "./TodoList";
 
-type Props = {
+type SingleTodoProps = {
   todo: Todo;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
+const SingleTodo: React.FC<SingleTodoProps> = ({
+  todo,
+  todos,
+  setTodos,
+}: SingleTodoProps) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
+
+  /*
 
   const handleDone = (id: number) => {
     setTodos(
@@ -26,10 +32,34 @@ const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
       )
     );
   };
+  */
+
+  /*
+  This is for confirm the task is done
+  */
+
+  const handleDone = (id: number) => {
+    setTodos(
+      (
+        prev // For getting current State
+      ) =>
+        prev.map((todo) =>
+          todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+        )
+    );
+  };
+
+  /*
+  This is for delete the task from todo list
+  */
 
   const handleDelete = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
+
+   /*
+  This is for edit the task on todo list
+  */
   const handleEdit = (e: React.FormEvent, id: number) => {
     e.preventDefault();
     setTodos(
